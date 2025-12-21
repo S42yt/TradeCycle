@@ -1,4 +1,4 @@
-package net.cutecraft.core.event
+package tr.s42.core.event
 
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager

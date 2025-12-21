@@ -1,4 +1,4 @@
-package net.cutecraft.core.util
+package tr.s42.core.util
 
 import org.bukkit.Sound
 import org.bukkit.entity.Player

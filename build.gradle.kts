@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "tr.s42"
-version = "1.5.0"
+version = "1.5.0-rc.1.21"
 
 repositories { mavenCentral() }
 

@@ -1,10 +1,10 @@
-package net.cutecraft.core
+package tr.s42.core
 
-import net.cutecraft.core.common.ComparableVersion
-import net.cutecraft.core.common.VersionCheckTask
-import net.cutecraft.core.listener.VillagerCycleListener
-import net.cutecraft.core.service.TradeCycleService
-import net.cutecraft.core.service.TradeCycleService.Companion.strategies
+import tr.s42.core.common.ComparableVersion
+import tr.s42.core.common.VersionCheckTask
+import tr.s42.core.listener.VillagerCycleListener
+import tr.s42.core.service.TradeCycleService
+import tr.s42.core.service.TradeCycleService.Companion.strategies
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
@@ -43,7 +43,7 @@ class Platform(private val provider: PlatformProvider) {
         }
 
         val pluginManager: PluginManager = plugin.server.pluginManager
-        pluginManager.registerEvents(VillagerCycleListener(service, provider.openInventoryViewFunction, plugin), plugin)
+        pluginManager.registerEvents(VillagerCycleListener(service, plugin), plugin)
         strategies.forEach { pluginManager.registerEvents(it, plugin) }
     }
 

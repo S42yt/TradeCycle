@@ -1,6 +1,6 @@
-package net.cutecraft.core
+package tr.s42.core
 
-import net.cutecraft.core.service.IMessageService
+import tr.s42.core.service.IMessageService
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
 import org.bukkit.inventory.InventoryView

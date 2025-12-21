@@ -1,4 +1,4 @@
-package net.cutecraft.core.common
+package tr.s42.core.common
 
 data class ComparableVersion(val rawVersion: String) : Comparable<ComparableVersion> {
 

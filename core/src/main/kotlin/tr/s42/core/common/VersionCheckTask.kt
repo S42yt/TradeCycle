@@ -1,4 +1,4 @@
-package net.cutecraft.core.common
+package tr.s42.core.common
 
 import org.bukkit.scheduler.BukkitRunnable
 import java.net.URI

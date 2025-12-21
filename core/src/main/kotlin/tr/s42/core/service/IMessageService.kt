@@ -1,4 +1,4 @@
-package net.cutecraft.core.service
+package tr.s42.core.service
 
 import org.bukkit.entity.Player
 

@@ -1,7 +1,7 @@
-package net.cutecraft.core.service
+package tr.s42.core.service
 
-import net.cutecraft.core.strategy.KeyboardStrategy
-import net.cutecraft.core.strategy.ShiftInteractStrategy
+import tr.s42.core.strategy.KeyboardStrategy
+import tr.s42.core.strategy.ShiftInteractStrategy
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager

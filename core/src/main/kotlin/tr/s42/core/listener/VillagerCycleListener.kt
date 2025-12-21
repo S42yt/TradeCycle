@@ -1,21 +1,18 @@
-package net.cutecraft.core.listener
+package tr.s42.core.listener
 
-import net.cutecraft.core.event.VillagerCycleTradeEvent
-import net.cutecraft.core.service.TradeCycleService
-import net.cutecraft.core.util.SoundUtil.play
+import tr.s42.core.event.VillagerCycleTradeEvent
+import tr.s42.core.service.TradeCycleService
+import tr.s42.core.util.SoundUtil.play
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.inventory.InventoryView
 import org.bukkit.plugin.Plugin
-import java.util.function.BiFunction
 
 class VillagerCycleListener(
     private val tradeCycleService: TradeCycleService,
-    private val openInventoryViewFunction: BiFunction<Villager, Player, InventoryView>,
     private val plugin: Plugin
 ) : Listener {
 
@@ -35,7 +32,8 @@ class VillagerCycleListener(
 
         tradeCycleService.cycleTrade(villager)
         Bukkit.getScheduler().runTask(plugin, Runnable {
-            player.openInventory(openInventoryViewFunction.apply(villager, player))
+            player.closeInventory()
+            player.openMerchant(villager, true)
         })
 
         Sound.UI_BUTTON_CLICK.play(player)

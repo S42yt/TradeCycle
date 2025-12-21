@@ -1,6 +1,6 @@
 package tr.s42.paper
 
-import net.cutecraft.core.service.IMessageService
+import tr.s42.core.service.IMessageService
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.entity.Player
 

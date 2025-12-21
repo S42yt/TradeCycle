@@ -3,4 +3,4 @@ version: "${version}"
 main: tr.s42.paper.TradeCyclePlugin
 authors: [ S42, Tamikaschu ]
 description: Cycles through Villager trades from UI.
-api-version: '1.21.4'
+api-version: '1.21'
