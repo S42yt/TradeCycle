@@ -1,4 +1,4 @@
-package net.cutecraft.paper
+package tr.s42.paper
 
 import net.cutecraft.core.Platform
 import net.cutecraft.core.PlatformProvider

@@ -1,4 +1,4 @@
-package net.cutecraft.spigot
+package tr.s42.spigot
 
 import net.cutecraft.core.Platform
 import net.cutecraft.core.PlatformProvider

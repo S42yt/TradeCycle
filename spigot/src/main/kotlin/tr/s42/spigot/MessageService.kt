@@ -1,4 +1,4 @@
-package net.cutecraft.spigot
+package tr.s42.spigot
 
 import net.cutecraft.core.service.IMessageService
 import net.md_5.bungee.api.ChatMessageType

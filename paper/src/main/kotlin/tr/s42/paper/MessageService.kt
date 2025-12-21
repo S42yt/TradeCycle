@@ -1,4 +1,4 @@
-package net.cutecraft.paper
+package tr.s42.paper
 
 import net.cutecraft.core.service.IMessageService
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer

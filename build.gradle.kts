@@ -6,7 +6,7 @@ plugins {
     id("java")
 }
 
-group = "net.cutecraft"
+group = "tr.s42"
 version = "1.5.0"
 
 repositories { mavenCentral() }
