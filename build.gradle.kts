@@ -25,27 +25,11 @@ subprojects {
         maven(uri("https://repo.papermc.io/repository/maven-public/"))
         maven(uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots"))
     }
+    dependencies {
+        implementation(stdlib)
+    }
     kotlin {
         jvmToolchain(21)
-    }
-    if (project.name == "core") {
-        return@subprojects
-    }
-    tasks {
-        jar { enabled = false }
-        build { dependsOn(shadowJar) }
-        shadowJar {
-            archiveBaseName.set(rootProject.name)
-            archiveVersion.set(project.version.toString())
-            archiveClassifier.set(project.name)
-            destinationDirectory.set(rootProject.layout.buildDirectory.dir("libs"))
-            relocate("kotlin", "net.cutecraft.libs.kotlin")
-            minimize()
-        }
-    }
-    dependencies {
-        implementation(project(":core"))
-        implementation(stdlib)
     }
 }
 

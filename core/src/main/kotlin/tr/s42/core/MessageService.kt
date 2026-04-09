@@ -1,8 +1,8 @@
-package net.cutecraft.core.service
+package tr.s42.core
 
 import org.bukkit.entity.Player
 
-interface IMessageService {
+interface MessageService {
 
     fun sendActionBar(player: Player, message: String)
 

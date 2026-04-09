@@ -1,14 +1,15 @@
-package net.cutecraft.core.service
+package tr.s42.tradecycle.service
 
-import net.cutecraft.core.strategy.KeyboardStrategy
-import net.cutecraft.core.strategy.ShiftInteractStrategy
+import tr.s42.tradecycle.strategy.KeyboardStrategy
+import tr.s42.tradecycle.strategy.ShiftInteractStrategy
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
 import org.bukkit.event.Listener
+import tr.s42.core.MessageService
 
 class TradeCycleService(
-    private val messageService: IMessageService,
+    private val messageService: MessageService,
     private val config: FileConfiguration
 ) {
 

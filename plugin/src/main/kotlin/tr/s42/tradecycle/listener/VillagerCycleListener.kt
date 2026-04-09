@@ -1,8 +1,8 @@
-package net.cutecraft.core.listener
+package tr.s42.tradecycle.listener
 
-import net.cutecraft.core.event.VillagerCycleTradeEvent
-import net.cutecraft.core.service.TradeCycleService
-import net.cutecraft.core.util.SoundUtil.play
+import tr.s42.tradecycle.event.VillagerCycleTradeEvent
+import tr.s42.tradecycle.service.TradeCycleService
+import tr.s42.tradecycle.util.SoundUtil.play
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player

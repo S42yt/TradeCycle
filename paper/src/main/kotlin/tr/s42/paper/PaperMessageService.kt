@@ -1,10 +1,10 @@
 package tr.s42.paper
 
-import net.cutecraft.core.service.IMessageService
+import tr.s42.core.MessageService
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.entity.Player
 
-class MessageService : IMessageService {
+class PaperMessageService : MessageService {
 
     companion object {
         private val legacyComponentSerializer = LegacyComponentSerializer.legacy('&')

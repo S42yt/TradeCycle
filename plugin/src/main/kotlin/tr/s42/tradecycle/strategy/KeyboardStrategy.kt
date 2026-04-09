@@ -1,6 +1,6 @@
-package net.cutecraft.core.strategy
+package tr.s42.tradecycle.strategy
 
-import net.cutecraft.core.event.VillagerCycleTradeEvent
+import tr.s42.tradecycle.event.VillagerCycleTradeEvent
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
