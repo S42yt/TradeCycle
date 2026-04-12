@@ -1,29 +1,22 @@
-package tr.s42.paper
+package tr.s42.spigot
 
-import net.cutecraft.core.Platform
-import net.cutecraft.core.PlatformProvider
-import net.cutecraft.core.service.IMessageService
+import tr.s42.core.Platform
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
 import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.MenuType
-import org.bukkit.plugin.Plugin
-import org.bukkit.plugin.java.JavaPlugin
+import tr.s42.core.MessageService
 import java.util.function.BiFunction
 
-class TradeCyclePlugin : JavaPlugin(), PlatformProvider {
+class SpigotPlatform: Platform {
 
-    override val plugin: Plugin = this
-    override val messageService: IMessageService = MessageService()
-
-    override fun onEnable() {
-        Platform(this).onEnable()
-    }
+    override val messageService: MessageService = SpigotMessageService()
 
     @Suppress("UnstableApiUsage")
     override val openInventoryViewFunction: BiFunction<Villager, Player, InventoryView> =
         BiFunction { villager, player ->
             MenuType.MERCHANT.builder()
+                .title(villager.profession.keyOrThrow.key)
                 .merchant(villager)
                 .build(player)
         }
