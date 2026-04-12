@@ -9,7 +9,7 @@ dependencies {
 tasks {
     processResources {
         filesMatching("plugin.yml") {
-            expand("version" to project.version)
+            expand("version" to rootProject.version)
         }
     }
     jar { enabled = false }
