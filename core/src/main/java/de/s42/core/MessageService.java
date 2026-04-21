@@ -6,6 +6,4 @@ public interface MessageService {
 
     void sendActionBar(Player player, String message);
 
-    void sendChatMessage(Player player, String message);
-
 }
