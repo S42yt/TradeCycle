@@ -3,6 +3,7 @@ package de.s42.tradecycle.listener;
 import de.s42.tradecycle.event.VillagerCycleTradeEvent;
 import de.s42.tradecycle.service.TradeCycleService;
 import de.s42.tradecycle.util.SoundUtil;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -11,27 +12,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiFunction;
 
+@AllArgsConstructor
 public class VillagerCycleListener implements Listener {
 
     private final TradeCycleService tradeCycleService;
     private final BiFunction<Villager, Player, InventoryView> openInventoryViewFunction;
     private final Plugin plugin;
 
-    public VillagerCycleListener(
-            TradeCycleService tradeCycleService,
-            BiFunction<Villager, Player, InventoryView> openInventoryViewFunction,
-            Plugin plugin
-    ) {
-        this.tradeCycleService = tradeCycleService;
-        this.openInventoryViewFunction = openInventoryViewFunction;
-        this.plugin = plugin;
-    }
-
     @EventHandler
-    public void onVillagerCycleTradeEvent(VillagerCycleTradeEvent event) {
+    public void onVillagerCycleTradeEvent(@NotNull VillagerCycleTradeEvent event) {
         Villager villager = event.getVillager();
         Player player = event.getPlayer();
 

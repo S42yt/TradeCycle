@@ -1,5 +1,6 @@
 package de.s42.tradecycle.common;
 
+import lombok.AllArgsConstructor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.InputStream;
@@ -8,15 +9,12 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+@AllArgsConstructor
 public class VersionCheckTask extends BukkitRunnable {
 
-    public static final String RESOURCE = "https://api.spigotmc.org/legacy/update.php?resource=122805";
+    public static final String RESOURCE = "https://api.modrinth.com/v2/project/GpyBM69F/version?version_type=release";
 
     private final Consumer<ComparableVersion> comparable;
-
-    public VersionCheckTask(Consumer<ComparableVersion> comparable) {
-        this.comparable = comparable;
-    }
 
     @Override
     public void run() {
@@ -24,7 +22,15 @@ public class VersionCheckTask extends BukkitRunnable {
             URL url = URI.create(RESOURCE).toURL();
             try (InputStream result = url.openStream()) {
                 Scanner scanner = new Scanner(result);
-                comparable.accept(new ComparableVersion(scanner.next()));
+                String json = scanner.useDelimiter("\\A").next();
+
+                int idx = json.indexOf("\"version_number\":");
+                if (idx != -1) {
+                    int start = json.indexOf("\"", idx + 17) + 1;
+                    int end = json.indexOf("\"", start);
+                    String latestVersion = json.substring(start, end);
+                    comparable.accept(new ComparableVersion(latestVersion));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package de.s42.tradecycle.service;
 import de.s42.core.MessageService;
 import de.s42.tradecycle.strategy.KeyboardStrategy;
 import de.s42.tradecycle.strategy.ShiftInteractStrategy;
+import lombok.AllArgsConstructor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -10,6 +11,7 @@ import org.bukkit.event.Listener;
 
 import java.util.Map;
 
+@AllArgsConstructor
 public class TradeCycleService {
 
     public static final Map<String, Listener> strategies = Map.of(
@@ -19,11 +21,6 @@ public class TradeCycleService {
 
     private final MessageService messageService;
     private final FileConfiguration config;
-
-    public TradeCycleService(MessageService messageService, FileConfiguration config) {
-        this.messageService = messageService;
-        this.config = config;
-    }
 
     public void sendActionBar(Player player, String messageKey) {
         String message = config.getString("messages." + messageKey);
