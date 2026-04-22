@@ -8,11 +8,12 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class ShiftInteractStrategy implements Listener {
 
     @EventHandler
-    public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
+    public void onPlayerInteractEntityEvent(@NotNull PlayerInteractEntityEvent event) {
         if (event.isCancelled()) {
             return;
         }

@@ -10,11 +10,12 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.MerchantInventory;
+import org.jetbrains.annotations.NotNull;
 
 public class KeyboardStrategy implements Listener {
 
     @EventHandler
-    public void onInventoryClickEvent(InventoryClickEvent event) {
+    public void onInventoryClickEvent(@NotNull InventoryClickEvent event) {
         if (event.isCancelled()) {
             return;
         }

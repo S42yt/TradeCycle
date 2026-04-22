@@ -1,11 +1,14 @@
 package de.s42.tradecycle.common;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComparableVersion implements Comparable<ComparableVersion> {
 
+    @Getter
     private final String rawVersion;
     private final List<Integer> parts;
 
@@ -20,10 +23,6 @@ public class ComparableVersion implements Comparable<ComparableVersion> {
                     }
                 })
                 .collect(Collectors.toList());
-    }
-
-    public String getRawVersion() {
-        return rawVersion;
     }
 
     @Override

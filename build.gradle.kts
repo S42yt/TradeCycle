@@ -10,6 +10,8 @@ version = "2.0.0"
 
 repositories { mavenCentral() }
 
+private val lombok = libs.lombok.get()
+
 subprojects {
     version = rootProject.version
     apply {
@@ -21,6 +23,10 @@ subprojects {
         mavenCentral()
         maven(uri("https://repo.papermc.io/repository/maven-public/"))
         maven(uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots"))
+    }
+    dependencies {
+        compileOnly(lombok)
+        annotationProcessor(lombok)
     }
 }
 
