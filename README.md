@@ -4,7 +4,7 @@
 
 [![Spigot Downloads](https://img.shields.io/spiget/downloads/122805?label=spigot%20downloads&style=for-the-badge&color=ee8917)](https://www.spigotmc.org/resources/tradecycle.122805/) [![Modrinth Downloads](https://img.shields.io/modrinth/dt/tradecycle?label=modrinth%20downloads&style=for-the-badge&color=5da545)](https://modrinth.com/plugin/tradecycle)
 
-### A multiplatform plugin written in Kotlin to cycle through Villager trades from UI. Inspired by [henkelmax](https://modrinth.com/user/henkelmax)'s mod [Trade Cycling](https://modrinth.com/mod/trade-cycling).
+### A multiplatform plugin to cycle through Villager trades from UI. Inspired by [henkelmax](https://modrinth.com/user/henkelmax)'s mod [Trade Cycling](https://modrinth.com/mod/trade-cycling).
 
 <hr>
 
@@ -54,3 +54,5 @@ Feel free to open an issue or a pull request, I will be happy to help you! Speci
 project:
 
 - [Tamikaschu](https://github.com/tamikaschu)
+- [Tsundosika](https://github.com/tsundosika)
+

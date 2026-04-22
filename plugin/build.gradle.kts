@@ -19,7 +19,6 @@ tasks {
         archiveVersion.set(project.version.toString())
         archiveClassifier.set(null as String?)
         destinationDirectory.set(rootProject.layout.buildDirectory.dir("libs"))
-        relocate("kotlin", "tr.s42.libs.kotlin")
         minimize()
     }
 }
