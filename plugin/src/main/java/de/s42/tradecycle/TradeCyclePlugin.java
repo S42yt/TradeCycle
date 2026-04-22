@@ -34,7 +34,7 @@ public class TradeCyclePlugin extends JavaPlugin {
             ComparableVersion currentVersion = new ComparableVersion(getDescription().getVersion());
             if (currentVersion.compareTo(latestVersion) < 0) {
                 getLogger().warning("A new version of TradeCycle is available: " + latestVersion.getRawVersion() + ". You are using version: " + currentVersion.getRawVersion());
-                getLogger().warning("Download the latest version at: " + VersionCheckTask.RESOURCE);
+                getLogger().warning("Download the latest version at: " + VersionCheckTask.DIRECT_DOWNLOAD);
             }
         }).runTaskAsynchronously(this);
     }

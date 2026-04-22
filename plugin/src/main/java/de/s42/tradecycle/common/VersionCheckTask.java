@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 public class VersionCheckTask extends BukkitRunnable {
 
     public static final String RESOURCE = "https://api.modrinth.com/v2/project/GpyBM69F/version?version_type=release";
+    public static final String DIRECT_DOWNLOAD = "https://modrinth.com/plugin/tradecycle#download";
 
     private final Consumer<ComparableVersion> comparable;
 
