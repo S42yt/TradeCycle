@@ -11,7 +11,7 @@ import org.bukkit.inventory.MenuType;
 import java.util.function.BiFunction;
 
 @Getter
-public class SpigotPlattform implements Platform {
+public class SpigotPlatform implements Platform {
 
     private final MessageService messageService = new SpigotMessageService();
 

@@ -1,21 +1,18 @@
 package de.s42.tradecycle;
 
-import de.s42.core.MessageService;
 import de.s42.core.Platform;
 import de.s42.paper.PaperPlatform;
-import de.s42.spigot.SpigotPlattform;
+import de.s42.spigot.SpigotPlatform;
 import de.s42.tradecycle.common.ComparableVersion;
 import de.s42.tradecycle.common.VersionCheckTask;
 import de.s42.tradecycle.listener.VillagerCycleListener;
 import de.s42.tradecycle.service.TradeCycleService;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TradeCyclePlugin extends JavaPlugin {
 
@@ -44,7 +41,7 @@ public class TradeCyclePlugin extends JavaPlugin {
             Class.forName("com.destroystokyo.paper.PaperConfig");
             return new PaperPlatform();
         } catch (ClassNotFoundException e) {
-            return new SpigotPlattform();
+            return new SpigotPlatform();
         }
     }
 
