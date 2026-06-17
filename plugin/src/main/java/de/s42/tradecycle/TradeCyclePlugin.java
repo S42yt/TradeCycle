@@ -18,22 +18,23 @@ public class TradeCyclePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        checkForUpdates();
         saveDefaultConfig();
 
         Platform platform = getPlatform();
+        checkForUpdates(platform);
+
         TradeCycleService service = new TradeCycleService(platform.getMessageService(), getConfig());
         registerStrategies(platform, service, getConfig());
     }
 
-    private void checkForUpdates() {
-        new VersionCheckTask(latestVersion -> {
+    private void checkForUpdates(Platform platform) {
+        platform.runAsync(this, new VersionCheckTask(latestVersion -> {
             ComparableVersion currentVersion = new ComparableVersion(getDescription().getVersion());
             if (currentVersion.compareTo(latestVersion) < 0) {
                 getLogger().warning("A new version of TradeCycle is available: " + latestVersion.getRawVersion() + ". You are using version: " + currentVersion.getRawVersion());
                 getLogger().warning("Download the latest version at: " + VersionCheckTask.DIRECT_DOWNLOAD);
             }
-        }).runTaskAsynchronously(this);
+        }));
     }
 
     private Platform getPlatform() {
@@ -55,7 +56,7 @@ public class TradeCyclePlugin extends JavaPlugin {
                 .toList();
 
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new VillagerCycleListener(service, platform.getOpenInventoryViewFunction(), this), this);
+        pluginManager.registerEvents(new VillagerCycleListener(service, platform.getOpenInventoryViewFunction(), this, platform), this);
         strategies.forEach(s -> pluginManager.registerEvents(s, this));
     }
 }
