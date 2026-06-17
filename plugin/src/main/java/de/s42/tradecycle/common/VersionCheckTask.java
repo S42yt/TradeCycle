@@ -1,7 +1,6 @@
 package de.s42.tradecycle.common;
 
 import lombok.AllArgsConstructor;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -10,7 +9,7 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 @AllArgsConstructor
-public class VersionCheckTask extends BukkitRunnable {
+public class VersionCheckTask implements Runnable {
 
     public static final String RESOURCE = "https://api.modrinth.com/v2/project/GpyBM69F/version?version_type=release";
     public static final String DIRECT_DOWNLOAD = "https://modrinth.com/plugin/tradecycle#download";

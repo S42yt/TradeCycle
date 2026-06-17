@@ -4,3 +4,4 @@ main: de.s42.tradecycle.TradeCyclePlugin
 authors: [ S42, Tamikaschu, Tsundosika ]
 description: Cycles through Villager trades from UI.
 api-version: '1.21.4'
+folia-supported: true

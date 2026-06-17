@@ -1,10 +1,10 @@
 package de.s42.tradecycle.listener;
 
+import de.s42.core.Platform;
 import de.s42.tradecycle.event.VillagerCycleTradeEvent;
 import de.s42.tradecycle.service.TradeCycleService;
 import de.s42.tradecycle.util.SoundUtil;
 import lombok.AllArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -22,6 +22,7 @@ public class VillagerCycleListener implements Listener {
     private final TradeCycleService tradeCycleService;
     private final BiFunction<Villager, Player, InventoryView> openInventoryViewFunction;
     private final Plugin plugin;
+    private final Platform platform;
 
     @EventHandler
     public void onVillagerCycleTradeEvent(@NotNull VillagerCycleTradeEvent event) {
@@ -39,7 +40,7 @@ public class VillagerCycleListener implements Listener {
         }
 
         tradeCycleService.cycleTrade(villager);
-        Bukkit.getScheduler().runTask(plugin, () ->
+        platform.runOnEntity(plugin, player, () ->
                 player.openInventory(openInventoryViewFunction.apply(villager, player))
         );
 

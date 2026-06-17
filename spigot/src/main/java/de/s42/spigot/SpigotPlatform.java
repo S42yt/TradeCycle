@@ -3,10 +3,13 @@ package de.s42.spigot;
 import de.s42.core.MessageService;
 import de.s42.core.Platform;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.MenuType;
+import org.bukkit.plugin.Plugin;
 
 import java.util.function.BiFunction;
 
@@ -21,4 +24,14 @@ public class SpigotPlatform implements Platform {
                     .title(villager.getProfession().getKey().toString())
                     .merchant(villager)
                     .build(player);
+
+    @Override
+    public void runAsync(Plugin plugin, Runnable task) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, task);
+    }
+
+    @Override
+    public void runOnEntity(Plugin plugin, Entity entity, Runnable task) {
+        Bukkit.getScheduler().runTask(plugin, task);
+    }
 }
