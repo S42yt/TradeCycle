@@ -6,9 +6,12 @@ on:
       - 'v*'
     branches:
       - master
+  release:
+    types: [published]
 
 jobs:
   build:
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -27,86 +30,106 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
+      - name: Get version from build.gradle.kts
+        id: version
+        run: echo "version=$(grep -E '^version = ' build.gradle.kts | sed -E 's/.*"([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
+
       - name: Build with Gradle
         run: ./gradlew build
 
       - name: Create Tag Release
         if: startsWith(github.ref, 'refs/tags/v')
-        id: create_tag_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
-
-      - name: Upload Paper JAR (Tag Release)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: actions/upload-release-asset@v1
+          files: build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_tag_release.outputs.upload_url }}
-          asset_path: ./build/libs/TradeCycle-1.5.0-paper.jar
-          asset_name: TradeCycle-1.5.0-paper.jar
-          asset_content_type: application/java-archive
-
-      - name: Upload Spigot JAR (Tag Release)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_tag_release.outputs.upload_url }}
-          asset_path: ./build/libs/TradeCycle-1.5.0-spigot.jar
-          asset_name: TradeCycle-1.5.0-spigot.jar
-          asset_content_type: application/java-archive
-
-      - name: Get latest tag for auto-increment
-        if: github.ref == 'refs/heads/master'
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git tag -l 'v*' | sort -V | tail -n1)
-          if [ -z "$latest_tag" ]; then
-            echo "version=v1.4.0" >> $GITHUB_OUTPUT
-          else
-            current_version=$(echo $latest_tag | sed 's/v//')
-            major=$(echo $current_version | cut -d. -f1)
-            minor=$(echo $current_version | cut -d. -f2)
-            
-            if [[ $current_version == *"."*"."* ]]; then
-              patch=$(echo $current_version | cut -d. -f3)
-              new_patch=$((patch + 1))
-              echo "version=v$major.$minor.$new_patch" >> $GITHUB_OUTPUT
-            else
-              echo "version=v$major.$minor.0" >> $GITHUB_OUTPUT
-            fi
-          fi
 
       - name: Create Auto-increment Release
         if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.get_latest_tag.outputs.version }}
-          name: Release ${{ steps.get_latest_tag.outputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
           draft: true
           body: |
-            # CHANGELOG ${{ steps.get_latest_tag.outputs.version }}
-            
+            # CHANGELOG v${{ steps.version.outputs.version }}
+
             ## BUGS:
             -
             -
-            
+
             ## FEATURES:
             -
             -
-            
+
             ## CONTRIBUTERS:
             -
             -
-          files: |
-            build/libs/*.jar
+          files: build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    if: ${{ github.event_name == 'release' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Get version from build.gradle.kts
+        id: version
+        run: echo "version=$(grep -E '^version = ' build.gradle.kts | sed -E 's/.*"([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Publish to Modrinth & CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ vars.MODRINTH_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: ${{ vars.CURSEFORGE_ID }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: build/libs/*.jar
+          name: ${{ github.event.release.name }}
+          version: ${{ steps.version.outputs.version }}
+          version-type: release
+          changelog: ${{ github.event.release.body }}
+          loaders: |
+            paper
+            spigot
+          game-versions: ">=1.21.4"
+          game-version-filter: releases
+
+      - name: Publish to Hangar
+        env:
+          HANGAR_TOKEN: ${{ secrets.HANGAR_API_TOKEN }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+        run: |
+          jwt=$(curl -sf -X POST "https://hangar.papermc.io/api/v1/authenticate?apiKey=$HANGAR_TOKEN" | jq -r .token)
+          jar=$(ls build/libs/*.jar | head -1)
+          # ponytail: Hangar has no version-range support, needs explicit list. Append new MC versions here as they release.
+          mc='["1.21.4","1.21.5","1.21.6","1.21.7","1.21.8"]'
+          upload=$(jq -nc \
+            --arg v "${{ steps.version.outputs.version }}" \
+            --arg d "$RELEASE_BODY" \
+            --argjson mc "$mc" \
+            '{version:$v, channel:"Release", description:$d, files:[{platforms:["PAPER"]}], pluginDependencies:{}, platformDependencies:{PAPER:$mc}}')
+          curl -sf -X POST "https://hangar.papermc.io/api/v1/projects/TradeCycle/upload" \
+            -H "Authorization: $jwt" \
+            -F "versionUpload=$upload;type=application/json" \
+            -F "files=@$jar"
